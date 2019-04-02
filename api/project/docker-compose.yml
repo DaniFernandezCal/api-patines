@@ -1,0 +1,29 @@
+---
+version: "2"
+
+services:
+  api:
+    image: patines_api
+    environment:
+      - MODE=dev
+    volumes:
+      - .:/code
+    depends_on:
+      - mongodb
+      - rabbitmq
+    ports:
+      - "5000:5000"
+      
+  rabbitmq:
+    image: rabbitmq:3.6.1-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+      - "8023:15672"
+      - "8024:5672"
+
+  mongodb:
+    image: mongo:3.0.2
+    ports:
+        - "27017:27017"
